@@ -20,4 +20,7 @@ raspberrypi的主控制程式
 linbot 的連線位址
 
 
-## 
+## recongnize.py
+匯入訓練好的 tensorflow lite 物體辨識模型  
+並根據樹梅派的照片資料做出物體辨識  
+顯示照片中 辨識信心度最高的三樣物品
