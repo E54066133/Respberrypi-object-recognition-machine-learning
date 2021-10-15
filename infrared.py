@@ -3,7 +3,7 @@ import requests
 import RPi.GPIO as GPIO
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config_pi.ini')
 lineserver_host =config.get('line-bot', 'lineserver_host') 
 SEN_PIN = 36 #IR sensor腳位
 data = {
