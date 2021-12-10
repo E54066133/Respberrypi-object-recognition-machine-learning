@@ -11,15 +11,15 @@ import random
 
 app = Flask(__name__)
 
-# LINE 聊天機器人的基本資料
+# linebot 基本資料
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))
-handler = WebhookHandler(config.get('line-bot', 'channel_secret'))
-raspberrypi_host = (config.get('line-bot', 'raspberrypi_host'))
-# 接收 LINE 的資訊
-@app.route("/callback",methods=['POST',"GET"])
+line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))  #抓 linebot channel_access_token
+handler = WebhookHandler(config.get('line-bot', 'channel_secret'))         #抓 linebot channel_secret
+raspberrypi_host = (config.get('line-bot', 'raspberrypi_host'))            #抓 raspberrypi 位置
+# 接收 line 的資訊
+@app.route("/callback",methods=['POST',"GET"])                             #GET: 推送訊息  ； POST: 進行LINE驗證
 def callback():
     if request.method == 'GET':
         print("receive get request")
@@ -28,16 +28,16 @@ def callback():
         f.close()
         sensor_signal = request.args.get(key='SENSOR')
         if (sensor_signal=="ON"):
-            line_bot_api.broadcast(TextSendMessage(text='SENSOR IS ON SIGNAL'))#廣播通知全部人
-            line_bot_api.broadcast(TextSendMessage(text='This is a broadcast message'))#廣播通知全部人
-            line_bot_api.push_message(user_id, TextSendMessage(text='Message from Desktop send to specific id'))#向特定人傳送訊息
-            line_bot_api.push_message(user_id,#向特定人傳送訊息
+            line_bot_api.broadcast(TextSendMessage(text='SENSOR IS ON SIGNAL'))          #廣播通知全部人
+            line_bot_api.broadcast(TextSendMessage(text='This is a broadcast message'))  #廣播通知全部人
+            line_bot_api.push_message(user_id, TextSendMessage(text='Message from Desktop send to specific id'))   #向特定人傳送訊息
+            line_bot_api.push_message(user_id,                                                                     #向特定人傳送訊息
                                       ImageSendMessage(original_content_url=raspberrypi_host+"/photo_page",
-                                                       preview_image_url=raspberrypi_host+"/photo_page"))#若圖片無法顯示請在圖片網址後面請加上一個#符號
+                                                       preview_image_url=raspberrypi_host+"/photo_page"))          
 
         return "OK"
     elif request.method == 'POST':
-        signature = request.headers['X-Line-Signature'] # LINE 憑證驗證
+        signature = request.headers['X-Line-Signature']     # LINE 憑證驗證
 
         body = request.get_data(as_text=True)
         app.logger.info("Request body: " + body)
@@ -48,18 +48,18 @@ def callback():
             abort(400)
         return 'OK'
         
-# 學我說話
+# echo~
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
-    if event.message.text == "setreply":#設定使用者ID
+    if event.message.text == "setreply":             #設定使用者ID
         var_id = (event.source.user_id)
         with open('id.txt', 'w') as f:
-            f.write(str(var_id))
+            f.write(str(var_id))                     #寫入ID
             f.close()
-    elif (event.message.text == "photo"):#下自訂義指令叫樹梅派拍照
+    elif (event.message.text == "photo"):            #下自訂義指令叫樹梅派拍照
         pass
         data = {
             "name": "Jason",
