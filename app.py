@@ -28,7 +28,7 @@ def photo():   #控制樹梅派拍照
     if request.method=="GET":
         photo_enable = request.args.get(key='photo')   #設定key
         print(str(photo_enable))
-        if(str(photo_enable)=="ON"):
+        if(str(photo_enable)=="ON"):                   #檢查拍照權限
             try:
                 camera = PiCamera()
                 sleep(5)
