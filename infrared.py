@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import configparser
 config = configparser.ConfigParser()
 config.read('config_pi.ini')
-lineserver_host =config.get('line-bot', 'lineserver_host') 
+lineserver_host =config.get('line-bot', 'lineserver_host')   # 抓 linebot sever host 的位置檔
 SEN_PIN = 36  #IR sensor腳位
 data = {
     "name": "Jason",
