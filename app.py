@@ -43,7 +43,7 @@ def photo():   #控制樹梅派拍照
         else:
             return "NO camera"
             pass
-    else:
+    else:                          #request.method=="POST"
         pass
         return "Not get response"
 if __name__ == '__main__':
