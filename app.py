@@ -9,29 +9,31 @@ import os
 app = Flask(__name__)
 
 IMG_PATH=os.path.abspath(os.path.dirname(__file__))+"/image.jpg"
-@app.route("/photo_page")#串流照片
+@app.route("/photo_page")  #串流照片
 def upload_photo():
     camera = PiCamera()
     sleep(2)
-    camera.start_preview()
-    camera.capture('./image.jpg')
-    camera.stop_preview()
+    camera.start_preview()  #開啟相機預覽
+    #camera.rotation =180   #解決鏡頭上下顛倒
+    camera.capture('./image.jpg')  #拍照並存檔
+    camera.stop_preview()   #關閉預覽
     camera.close()
-    image_data = open(IMG_PATH,"rb").read()
-    response = make_response(image_data)
+    image_data = open(IMG_PATH,"rb").read()   #只能讀檔(read only)
+    response = make_response(image_data)      #設定 response
     response.headers['Content-Type'] = 'image/jpg'
     return response
   
 @app.route("/")
-def photo():#控制樹梅派胎照
+def photo():   #控制樹梅派拍照
     if request.method=="GET":
-        photo_enable = request.args.get(key='photo')
+        photo_enable = request.args.get(key='photo')   #設定key
         print(str(photo_enable))
         if(str(photo_enable)=="ON"):
             try:
                 camera = PiCamera()
                 sleep(5)
                 camera.start_preview()
+                #camera.rotation =180   #解決鏡頭上下顛倒
                 camera.capture('./image.jpg')
                 camera.stop_preview()
                 camera.close()
