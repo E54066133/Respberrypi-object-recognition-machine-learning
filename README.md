@@ -8,7 +8,7 @@ object recognition with machine learning on Respberry pi
 使用此 linebot 遠端控制樹梅派拍照
 
 ## config.ini
-linebot 的 channel token & secret
+linebot 的 channel token & secret  
 raspberrypi 的連線位址
 
 ## app.py 
