@@ -1,6 +1,8 @@
 # Respberrypi_object-recognition 
 object recognition with machine learning on Respberry pi
 
+![image](https://github.com/E54066133/Respberrypi-object-recognition-machine-learning/blob/62c83941ffd8614a041806652cd2eb6fa8f2a6b1/PI.png)
+
 ## line.py
 建立一支與樹梅派連線的 linebot  
 使用此 linebot 遠端控制樹梅派拍照
